@@ -36,6 +36,19 @@ public class FilmService {
                 .orElseThrow(() -> new IllegalArgumentException("Film non trovato per UUID: " + id));
     }
 
+    // Modifica film esistente
+    public Film updateFilm(UUID id, FilmForm filmForm) {
+        Film film = filmRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Film non trovato per UUID: " + id));
+
+        film.setTitolo(filmForm.getTitolo());
+        film.setAutore(filmForm.getAutore());
+        film.setGenere(filmForm.getGenere().name());
+        film.setAnnoPubblicazione(filmForm.getAnnoPubblicazione());
+
+        return filmRepository.save(film);
+    }
+
     // Eliminazione film per id
     public void deleteSingolo(UUID id) {
         if (!filmRepository.existsById(id)) {
