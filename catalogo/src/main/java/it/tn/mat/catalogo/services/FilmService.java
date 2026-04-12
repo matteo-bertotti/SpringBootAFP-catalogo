@@ -3,6 +3,7 @@ package it.tn.mat.catalogo.services;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.tn.mat.catalogo.domain.Film;
@@ -11,6 +12,7 @@ import it.tn.mat.catalogo.repositories.FilmRepository;
 
 @Service
 public class FilmService {
+    @Autowired
     private FilmRepository filmRepository;
     
     // Elenco films

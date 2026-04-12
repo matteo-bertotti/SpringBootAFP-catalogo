@@ -1,6 +1,7 @@
 package it.tn.mat.catalogo.domain;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Max;
@@ -20,7 +21,7 @@ public class FilmForm {
     @Size(max = 50)
     private String autore;
 
-    @NotEmpty
+    @NotNull
     private Genere genere;
 
     @Min(1888)
