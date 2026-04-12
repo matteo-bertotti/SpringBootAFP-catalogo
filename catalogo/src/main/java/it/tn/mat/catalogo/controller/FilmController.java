@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.tn.mat.catalogo.domain.Film;
 import it.tn.mat.catalogo.domain.FilmForm;
+import it.tn.mat.catalogo.domain.Genere;
 import it.tn.mat.catalogo.services.FilmService;
 import jakarta.validation.Valid;
 
@@ -58,6 +59,45 @@ public class FilmController {
             return new ModelAndView("film-detail").addObject("film", filmOpt.get());
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Film non trovato");
+        }
+    }
+
+    // Form modifica film - rotta: /film/edit/{id}
+    @GetMapping("film/edit/{id}")
+    public ModelAndView editFilmForm(@PathVariable("id") UUID id) {
+        Film film = filmService.filmPerId(id);
+
+        FilmForm filmForm = new FilmForm();
+        filmForm.setTitolo(film.getTitolo());
+        filmForm.setAutore(film.getAutore());
+        filmForm.setAnnoPubblicazione(film.getAnnoPubblicazione());
+        try {
+            filmForm.setGenere(Genere.valueOf(film.getGenere()));
+        } catch (IllegalArgumentException e) {
+            filmForm.setGenere(null);
+        }
+
+        return new ModelAndView("film-edit")
+                .addObject("filmForm", filmForm)
+                .addObject("filmId", id);
+    }
+
+    // Salvataggio modifica film - rotta: /film/edit/{id}
+    @PostMapping("film/edit/{id}")
+    public ModelAndView editFilm(@PathVariable("id") UUID id, @ModelAttribute @Valid FilmForm filmForm,
+            BindingResult br, RedirectAttributes attr) {
+        if (br.hasErrors()) {
+            return new ModelAndView("film-edit")
+                    .addObject("filmForm", filmForm)
+                    .addObject("filmId", id);
+        }
+
+        try {
+            filmService.updateFilm(id, filmForm);
+            attr.addFlashAttribute("updateFilm", "Film aggiornato con successo!");
+            return new ModelAndView("redirect:/film?id=" + id);
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 
