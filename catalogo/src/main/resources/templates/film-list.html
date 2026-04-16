@@ -56,6 +56,9 @@
                     <td th:text="${film.genere}"></td>
                     <td th:text="${film.annoPubblicazione}"></td>
                     <td>
+                        <a class="btn btn-sm btn-outline-primary me-1" th:href="@{/film/edit/{id}(id=${film.id})}">
+                            Modifica
+                        </a>
                         <a class="btn btn-sm btn-outline-danger" th:href="@{/film/delete/{id}(id=${film.id})}"
                            onclick="return confirm('Confermi l\'eliminazione di questo elemento?');">
                             Elimina
