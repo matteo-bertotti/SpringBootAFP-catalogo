@@ -1,0 +1,97 @@
+body {
+    background:
+        radial-gradient(circle at top left, rgba(13, 110, 253, 0.28), transparent 32%),
+        radial-gradient(circle at bottom right, rgba(111, 66, 193, 0.22), transparent 30%),
+        linear-gradient(135deg, #070b14 0%, #121a2a 45%, #0b1020 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    color-scheme: dark;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.85), transparent 90%);
+    opacity: 0.35;
+}
+
+.btn {
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
+}
+
+.glass-card {
+    background: linear-gradient(180deg, rgba(27, 33, 47, 0.72), rgba(17, 22, 34, 0.52)) !important;
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.09) !important;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.38);
+}
+
+.glass-element {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03)) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.table-hover tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.form-control,
+.form-select {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03)) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #f8f9fa !important;
+    color-scheme: dark;
+}
+
+.form-control:focus,
+.form-select:focus {
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25) !important;
+    border-color: #0d6efd !important;
+}
+
+.form-select option {
+    background-color: #121a2a;
+    color: #f8f9fa;
+}
+
+.form-control:disabled,
+.form-control[readonly] {
+    background: rgba(255, 255, 255, 0.04) !important;
+    opacity: 0.7;
+}
+
+.action-primary {
+    background: linear-gradient(135deg, #0d6efd, #6f42c1);
+    border: 0;
+}
+
+.action-primary:hover {
+    background: linear-gradient(135deg, #0b5ed7, #5a2dbf);
+}
+
+.action-danger {
+    background: linear-gradient(135deg, #dc3545, #f05d5d);
+    border: 0;
+}
+
+.action-danger:hover {
+    background: linear-gradient(135deg, #bb2d3b, #e14d4d);
+}
+
+.modal-content.glass-card {
+    background: linear-gradient(180deg, rgba(27, 33, 47, 0.92), rgba(17, 22, 34, 0.82)) !important;
+}
