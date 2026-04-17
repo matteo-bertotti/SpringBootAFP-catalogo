@@ -48,10 +48,38 @@
                 <thead class="table-dark text-uppercase small opacity-75">
                 <tr>
                     <th>Codice</th>
-                    <th>Titolo</th>
-                    <th>Autore / Produttore</th>
-                    <th>Genere</th>
-                    <th>Anno</th>
+                    <th>
+                        <a class="text-light text-decoration-none d-inline-flex align-items-center gap-1"
+                           th:href="@{/(sort='titolo',dir=${sort == 'titolo' and dir == 'asc' ? 'desc' : 'asc'})}">
+                            Titolo
+                            <i class="bi"
+                               th:classappend="${sort == 'titolo'} ? (${dir == 'asc'} ? ' bi-sort-alpha-down' : ' bi-sort-alpha-down-alt') : ' bi-arrow-down-up'"></i>
+                        </a>
+                    </th>
+                    <th>
+                        <a class="text-light text-decoration-none d-inline-flex align-items-center gap-1"
+                           th:href="@{/(sort='autore',dir=${sort == 'autore' and dir == 'asc' ? 'desc' : 'asc'})}">
+                            Autore / Produttore
+                            <i class="bi"
+                               th:classappend="${sort == 'autore'} ? (${dir == 'asc'} ? ' bi-sort-alpha-down' : ' bi-sort-alpha-down-alt') : ' bi-arrow-down-up'"></i>
+                        </a>
+                    </th>
+                    <th>
+                        <a class="text-light text-decoration-none d-inline-flex align-items-center gap-1"
+                           th:href="@{/(sort='genere',dir=${sort == 'genere' and dir == 'asc' ? 'desc' : 'asc'})}">
+                            Genere
+                            <i class="bi"
+                               th:classappend="${sort == 'genere'} ? (${dir == 'asc'} ? ' bi-sort-alpha-down' : ' bi-sort-alpha-down-alt') : ' bi-arrow-down-up'"></i>
+                        </a>
+                    </th>
+                    <th>
+                        <a class="text-light text-decoration-none d-inline-flex align-items-center gap-1"
+                           th:href="@{/(sort='anno',dir=${sort == 'anno' and dir == 'asc' ? 'desc' : 'asc'})}">
+                            Anno
+                            <i class="bi"
+                               th:classappend="${sort == 'anno'} ? (${dir == 'asc'} ? ' bi-sort-numeric-down' : ' bi-sort-numeric-down-alt') : ' bi-arrow-down-up'"></i>
+                        </a>
+                    </th>
                     <th>Azioni</th>
                 </tr>
                 </thead>
