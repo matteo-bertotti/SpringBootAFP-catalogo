@@ -30,8 +30,13 @@ public class FilmController {
 
     // Elenco film - rotta: / 
     @GetMapping
-    public ModelAndView elencoFilm() {
-        return new ModelAndView("film-list").addObject("films", filmService.elencoCatalogo());
+    public ModelAndView elencoFilm(
+            @RequestParam(name = "sort", defaultValue = "titolo") String sort,
+            @RequestParam(name = "dir", defaultValue = "asc") String dir) {
+        return new ModelAndView("film-list")
+                .addObject("films", filmService.elencoCatalogoOrdinato(sort, dir))
+                .addObject("sort", sort)
+                .addObject("dir", dir);
     }
 
     // Form per aggiunta film - rotta: /new
