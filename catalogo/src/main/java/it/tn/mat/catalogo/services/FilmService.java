@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import it.tn.mat.catalogo.domain.Film;
@@ -18,6 +19,22 @@ public class FilmService {
     // Elenco films
     public List<Film> elencoCatalogo() {
         return filmRepository.findAll();
+    }
+
+    // Elenco films ordinato
+    public List<Film> elencoCatalogoOrdinato(String sortBy, String direction) {
+        String property = switch (sortBy) {
+            case "autore" -> "autore";
+            case "genere" -> "genere";
+            case "anno" -> "annoPubblicazione";
+            default -> "titolo";
+        };
+
+        Sort.Direction sortDirection = "desc".equalsIgnoreCase(direction)
+                ? Sort.Direction.DESC
+                : Sort.Direction.ASC;
+
+        return filmRepository.findAll(Sort.by(sortDirection, property));
     }
 
     // Aggiunta film
