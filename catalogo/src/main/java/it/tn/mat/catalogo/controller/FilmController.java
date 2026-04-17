@@ -53,12 +53,12 @@ public class FilmController {
         }
         Film f = filmService.newFilm(filmForm);
         attr.addFlashAttribute("newFilm", "Film aggiunto con successo!");
-        return new ModelAndView("redirect:/film?id=" + f.getId());
+        return new ModelAndView("redirect:/film/" + f.getId());
     }
 
-    // Dettaglio film per id - rotta: /film?id=UUID
-    @GetMapping(path = "film", params = "id")
-    public ModelAndView filmPerId(@RequestParam("id") UUID id) {
+    // Dettaglio film per id - rotta: /film/id=UUID
+    @GetMapping("film/{id}")
+    public ModelAndView filmPerId(@PathVariable("id") UUID id) {
         Optional<Film> filmOpt = Optional.ofNullable(filmService.filmPerId(id));
         if (filmOpt.isPresent()) {
             return new ModelAndView("film-detail").addObject("film", filmOpt.get());
@@ -100,7 +100,7 @@ public class FilmController {
         try {
             filmService.updateFilm(id, filmForm);
             attr.addFlashAttribute("updateFilm", "Film aggiornato con successo!");
-            return new ModelAndView("redirect:/film?id=" + id);
+            return new ModelAndView("redirect:/film/" + id);
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
