@@ -36,7 +36,7 @@
         </header>
 
         <div class="alert alert-success border-0 shadow-sm" th:if="${newFilm}" th:text="${newFilm}"></div>
-        <div class="alert alert-warning border-0 shadow-sm" th:if="${deleteFilm}" th:text="${deleteFilm}"></div>
+        <div class="alert alert-danger border-0 shadow-sm" th:if="${deleteFilm}" th:text="${deleteFilm}"></div>
         <div class="alert alert-warning border-0 shadow-sm" th:if="${deleteAll}" th:text="${deleteAll}"></div>
 
         <div th:if="${#lists.isEmpty(films)}" class="alert alert-info mb-0">
@@ -85,7 +85,7 @@
                 <tbody>
                 <tr th:each="film : ${films}">
                     <td>
-                        <a class="fw-semibold text-decoration-none link-info" th:href="@{/film(id=${film.id})}">
+                        <a class="fw-semibold text-decoration-none link-info" th:href="@{/film/{id}(id=${film.id})}">
                             <span th:text="${film.titolo}"></span>
                         </a>
                         <div class="small text-secondary mt-1">
