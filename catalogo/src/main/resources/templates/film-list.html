@@ -47,7 +47,6 @@
             <table class="table table-hover align-middle mb-0">
                 <thead class="table-dark text-uppercase small opacity-75">
                 <tr>
-                    <th>Codice</th>
                     <th>
                         <a class="text-light text-decoration-none d-inline-flex align-items-center gap-1"
                            th:href="@{/(sort='titolo',dir=${sort == 'titolo' and dir == 'asc' ? 'desc' : 'asc'})}">
@@ -86,9 +85,14 @@
                 <tbody>
                 <tr th:each="film : ${films}">
                     <td>
-                        <a class="fw-semibold text-decoration-none link-info" th:href="@{/film(id=${film.id})}" th:text="${film.id}"></a>
+                        <a class="fw-semibold text-decoration-none link-info" th:href="@{/film(id=${film.id})}">
+                            <span th:text="${film.titolo}"></span>
+                        </a>
+                        <div class="small text-secondary mt-1">
+                            <span class="text-uppercase me-1">Codice:</span>
+                            <span th:text="${film.id}"></span>
+                        </div>
                     </td>
-                    <td th:text="${film.titolo}"></td>
                     <td th:text="${film.autore}"></td>
                     <td th:text="${film.genere}"></td>
                     <td th:text="${film.annoPubblicazione}"></td>
@@ -101,7 +105,9 @@
                                 class="btn btn-sm btn-outline-danger rounded-circle"
                                 title="Elimina"
                                 aria-label="Elimina film"
-                                th:attr="data-delete-url=@{/film/delete/{id}(id=${film.id})}, data-film-title=${film.titolo}"
+                                th:data-delete-url="@{/film/delete/{id}(id=${film.id})}"
+                                th:data-film-title="${film.titolo}"
+                                data-delete-mode="single"
                                 data-bs-toggle="modal"
                                 data-bs-target="#deleteFilmModal">
                             <i class="bi bi-trash"></i>
@@ -131,7 +137,9 @@
             </div>
             <div class="modal-footer border-0 pt-0">
                 <button type="button" class="btn btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal">Annulla</button>
-                <a href="#" class="btn btn-danger rounded-pill px-4" id="confirmDeleteFilmBtn">Elimina</a>
+                <form id="confirmDeleteFilmForm" action="#" method="get" class="d-inline">
+                    <button type="submit" class="btn btn-danger rounded-pill px-4" id="confirmDeleteFilmBtn">Elimina</button>
+                </form>
             </div>
         </div>
     </div>
@@ -145,17 +153,19 @@
         deleteModal.addEventListener('show.bs.modal', event => {
             const button = event.relatedTarget;
             const deleteUrl = button.getAttribute('data-delete-url');
-            const filmTitle = button.getAttribute('data-film-title');
+            const filmTitle = button.getAttribute('data-film-title') || 'questo elemento';
             const deleteMode = button.getAttribute('data-delete-mode');
-            document.getElementById('confirmDeleteFilmBtn').setAttribute('href', deleteUrl);
             const deleteActionElement = document.getElementById('deleteFilmAction');
             const deleteTargetElement = document.getElementById('deleteFilmTarget');
             const deleteModalLabel = document.getElementById('deleteFilmModalLabel');
             const confirmButton = document.getElementById('confirmDeleteFilmBtn');
+            const confirmForm = document.getElementById('confirmDeleteFilmForm');
+
+            confirmForm.setAttribute('action', deleteUrl || '#');
 
             if (deleteMode === 'all') {
                 deleteActionElement.textContent = 'svuotare';
-                deleteTargetElement.textContent = button.getAttribute('data-delete-title') || 'l'intero catalogo';
+                deleteTargetElement.textContent = button.getAttribute('data-delete-title') || "l'intero catalogo";
                 deleteModalLabel.textContent = 'Svuota catalogo';
                 confirmButton.textContent = 'Svuota';
             } else {
